@@ -1,0 +1,122 @@
+body{
+  margin: 0;
+  background: url("pagebg.jpg");
+  background-size: 1600px 800px;
+}
+
+#bar{
+  position: absolute;
+  top: 165px;
+  left: 300px;
+  width: 25px;
+  height: 25px;
+  padding: 3px;
+  background: #CAC68B;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 1s;
+}
+
+#bar:hover{
+  background:#D7A451;
+}
+
+#bar img{
+  width: 25px;
+  height: 25px;
+}
+
+#leftBar{
+  position: absolute;
+  top: 200px;
+  left: 300px;
+  width: 80px;
+  border-radius: 10px;
+  background-image: url("./bg.jpg");
+  overflow: hidden;
+  transition: all 1s;
+}
+
+.BarClose{
+  height: 0px;
+  padding: 0;
+}
+
+.BarOpen{
+  padding: 20px 20px 10px 20px;
+  height: 230px;
+}
+
+.button{
+  width: 80px;
+  margin-bottom: 20px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(230,120,125,0.4);
+  line-height: 40px;
+  text-align: center;
+  font-family: 微软雅黑;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 1s;
+}
+
+.button:hover{
+  background: #C9B192;
+}
+
+.button_unuse{
+  width: 80px;
+  margin-bottom: 20px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(113,100,78,0.4);
+  line-height: 40px;
+  text-align: center;
+  color: #cccccc;
+  font-family: 微软雅黑;
+  cursor: default;
+  font-weight: bold;
+  transition: all 1s;
+}
+
+#main{
+  position: absolute;
+  top: 20px;
+  left: 500px;
+  width:680px;
+  height: 680px;
+  background-image: url("./bg.jpg");
+  background-size: 680px;
+  border: 1px black solid;
+  border-radius: 8px;
+}
+
+#chessboard{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 600px;
+  width: 600px;
+  background-image: url("./qipan.jpg");
+  background-size: 600px;
+  border: 1px black solid;
+}
+
+#container{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 640px;
+  width: 642px;
+  background: rgba(230,120,125,0.4);
+}
+
+.chess_off{
+  margin: 2px;
+  width: 38px;
+  height: 38px;
+  border-radius: 20px;
+  background-size: 38px;
+  cursor: pointer;
+}

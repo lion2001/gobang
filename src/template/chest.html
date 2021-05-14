@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="./chest.css" type="text/css" rel="stylesheet">
+    <script src="./vue.min.js"></script>
+</head>
+<body>
+    <div id="big">
+        <div id="bar" v-on:click="barClick()">
+            <img src="bar.png">
+        </div>
+        <div id="leftBar" class="BarClose">
+            <div class="start button" v-on:click="start_first()">先手开始</div>
+            <div class="start button">后手开始</div>
+            <div class="bar button" v-on:click="setChessByRemo('2')">悔棋</div>
+            <div class="bar button">认输</div>
+        </div>
+        <div id="main">
+            <div id="container">
+                <div id="chessboard">
+                </div>
+                <div v-for="(item,i) in chesses" class="chess_off" :id="i" v-on:click="setChess(i)"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var app=new Vue({
+            el:"#big",
+            data(){
+              return{
+                  chesses : [
+                      0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,
+                      16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,
+                      32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,
+                      48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,
+                      64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,
+                      80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,
+                      96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,
+                      112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,
+                      128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,
+                      144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,
+                      160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,
+                      176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,
+                      192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,
+                      208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,
+                      224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,
+                      240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,
+                  ],
+                  chessesdistribution:[
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                  ],
+                  black:'./black.png',
+                  white:'./white.png',
+                  myturn: false,
+                  userTag: 'Me',
+                  chessTag_ME: 0,
+                  chessTag_Other:0,
+                  chessesColor_Me: '',
+                  chessesColor_Other:'',
+                  barOpen:false,
+              }
+            },
+            methods:{
+                setChess(id,user){
+                    //检测是否已经开始游戏
+                    if (this.chessesColor_Me == ''){
+                        window.alert("请先开始游戏")
+                    }else{
+                        let element = document.getElementById(id)
+                        let i = parseInt(id)
+                        let x = Math.floor(i/16)
+                        let y = (i - 16*x)*40
+                        let num = this.chessesdistribution[x][y]
+                        if (!this.myturn){
+                            window.alert("当前不是你的回合！")
+                        }else {
+                            if (num == 1 | num == -1){
+
+                            }else {
+                                this.myturn = false
+                                element.style.cursor = 'unset'
+                                this.chessesdistribution[x][y] = this.chessTag_ME
+                                element.style.backgroundImage = 'url("'+this.chessesColor_Me+'")'
+                            }
+                        }
+                    }
+                    //向ws发送一个信息，chessID
+
+
+                },
+                setChessByRemo(id){
+                    let element = document.getElementById(id)
+                    let i = parseInt(id)
+                    let x = Math.floor(i/16)
+                    let y = (i - 16*x)*40
+                    element.style.cursor = 'unset'
+                    this.chessesdistribution[x][y] = this.chessTag_Other
+                    element.style.backgroundImage = 'url("'+this.chessesColor_Other+'")'
+                    this.myturn = true
+                },
+                barClick(){
+                    let element = document.getElementById('leftBar')
+                    this.barOpen = !this.barOpen
+                    if (this.barOpen){
+                        element.classList.add("BarOpen")
+                    }else {
+                        element.classList.remove("BarOpen")
+                    }
+
+                },
+                start_first(){
+                    //向ws发送一个值
+                    //将我方设置为白方
+                    //将我的回合设置为true
+                    //取消开始的点击事件，更改开始的css
+                    this.chessesColor_Me = this.white
+                    this.chessesColor_Other = this.black
+                    this.chessTag_ME = 1
+                    this.chessTag_Other = -1
+                    this.myturn = true
+                    let Elements = document.getElementsByClassName('start')
+                    for (let i=0;i<Elements.length;i++){
+                        Elements[i].classList.remove('button')
+                        Elements[i].classList.add('button_unuse')
+                    }
+                },
+                receive_stsrt_first(){
+                    //将我方设置为黑方
+                    //取消开始的点击事件，更改开始的css
+                    this.chessesColor_Me = this.black
+                    this.chessesColor_Other = this.white
+                    this.chessTag_ME = -1
+                    this.chessTag_Other = 1
+                    this.myturn = false
+                    let Elements = document.getElementsByClassName('start')
+                    for (let i=0;i<Elements.length;i++){
+                        Elements[i].classList.remove('button')
+                        Elements[i].classList.add('button_unuse')
+                    }
+                },
+            },
+            mounted() {
+                let elements = document.getElementsByClassName('chess_off')
+                for (let i=0;i<elements.length;i++){
+                    let x = Math.floor(i/16)
+                    let y = (i - 16*x)*40
+                    let x_ = x*40
+                    elements[i].style.position = 'absolute'
+                    elements[i].style.top = x_+'px'
+                    elements[i].style.left = y+'px'
+                    // let random = Math.random()
+                    // if (random<0.1){
+                    //     elements[i].style.cursor = 'unset'
+                    //     this.chessesdistribution[x][y] = -1
+                    //     elements[i].style.backgroundImage = 'url("'+this.black+'")'
+                    // }else if (random>0.9){
+                    //     this.chessesdistribution[x][y] = 1
+                    //     elements[i].style.cursor = 'unset'
+                    //     elements[i].style.backgroundImage = 'url("'+this.white+'")'
+                    // }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
